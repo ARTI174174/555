@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Скачать файл</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+        .btn {
+            padding: 20px 50px;
+            font-size: 24px;
+            color: #fff;
+            background: #28a745;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .btn:hover {
+            background: #218838;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <button class="btn" onclick="downloadFile()">⬇ Скачать файл</button>
+
+    <script>
+        async function downloadFile() {
+            try {
+                // cache-bust, чтобы всегда брался свежий файл
+                const response = await fetch('1?t=' + Date.now());
+                if (!response.ok) throw new Error('Файл не найден');
+
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = '1';   // имя скачанного файла
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+            } catch (e) {
+                alert('Ошибка: ' + e.message);
+            }
+        }
+    </script>
+</body>
+</html>
