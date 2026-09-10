@@ -36,8 +36,7 @@
     <script>
         async function downloadFile() {
             try {
-                // cache-bust, чтобы всегда брался свежий файл
-                const response = await fetch('1?t=' + Date.now());
+                const response = await fetch('1.pptx?t=' + Date.now());
                 if (!response.ok) throw new Error('Файл не найден');
 
                 const blob = await response.blob();
@@ -45,7 +44,7 @@
 
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = '1';   // имя скачанного файла
+                a.download = '1.pptx';
                 document.body.appendChild(a);
                 a.click();
                 a.remove();
